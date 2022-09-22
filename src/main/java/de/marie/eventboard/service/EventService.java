@@ -16,8 +16,8 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public EventService(EventRepository eventRepository, Mapper mapper) {
-        this.eventRepository = eventRepository;
         this.mapper = mapper;
+        this.eventRepository = eventRepository;
     }
 
     public List<EventDto> getAllEvents() {

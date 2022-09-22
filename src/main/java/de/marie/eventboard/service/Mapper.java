@@ -2,12 +2,14 @@ package de.marie.eventboard.service;
 
 import de.marie.eventboard.dto.EventDto;
 import de.marie.eventboard.model.Event;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
+@Data
 public class Mapper {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
