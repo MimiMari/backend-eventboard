@@ -19,6 +19,23 @@ class EventServiceTest {
 
     @Test
     void getAllEvents() {
+        Mapper mapper = new Mapper();
+
+        LocalDateTime date = LocalDateTime.of(2022, 9, 25, 11, 53, 00);
+
+        EventDto eventDto = new EventDto();
+        eventDto.setTitle("Party");
+        eventDto.setDate(String.valueOf(date));
+        eventDto.setPlace("Hamburg");
+        eventDto.setDescription("Feiern und Tanzen");
+
+        EventRepository eventRepository = Mockito.mock(EventRepository.class);
+        EventService eventService = new EventService(eventRepository, mapper);
+
+        eventService.createEvent(eventDto);
+        eventService.getAllEvents();
+
+        Mockito.verify(eventRepository).findAll();
     }
 
     @Test
