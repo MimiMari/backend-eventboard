@@ -1,7 +1,8 @@
 package de.marie.eventboard.controller;
 
+import de.marie.eventboard.dto.EventDto;
 import de.marie.eventboard.model.Event;
-import de.marie.eventboard.repository.EventRepository;
+import de.marie.eventboard.service.EventService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +11,21 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 public class EventController {
 
-    private final EventRepository eventRepository;
+    private final EventService eventService;
 
-    public EventController(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
     }
 
     @GetMapping("/events")
-    public List<Event> getEvents() {
-        return this.eventRepository.findAll();
+    public List<EventDto> getEvents() {
+
+        return eventService.getAllEvents();
     }
 
     @PostMapping("/event")
-    public Event createEvents(@RequestBody Event event) {
-        return this.eventRepository.save(event);
+    public Event createEvents(@RequestBody EventDto eventDto) {
+
+        return eventService.createEvent(eventDto);
     }
 }
