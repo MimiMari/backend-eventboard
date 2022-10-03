@@ -51,4 +51,16 @@ class EventServiceTest {
 
         Mockito.verify(eventRepository).save(createTestEvent());
     }
+
+    @Test
+    void createEventFalse() {
+        EventRepository eventRepository = Mockito.mock(EventRepository.class);
+        EventService eventService = new EventService(eventRepository, mapper);
+
+        eventService.createEvent(createTestEventDto());
+        eventService.createEvent(createTestEventDto());
+
+        Mockito.verify(eventRepository,Mockito.times(2)).save(createTestEvent());
+
+    }
 }
