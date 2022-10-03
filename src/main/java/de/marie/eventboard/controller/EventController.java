@@ -6,6 +6,7 @@ import de.marie.eventboard.service.EventService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -14,6 +15,7 @@ public class EventController {
     private final EventService eventService;
 
     public EventController(EventService eventService) {
+
         this.eventService = eventService;
     }
 
@@ -21,6 +23,11 @@ public class EventController {
     public List<EventDto> getEvents() {
 
         return eventService.getAllEvents();
+//        List<EventDto> allEvents = eventService.getAllEvents();
+//        if (allEvents.isEmpty()) {
+//            throw new NoEventsException();
+//        }
+//        return allEvents;
     }
 
     @PostMapping("/event")
@@ -28,4 +35,11 @@ public class EventController {
 
         return eventService.createEvent(eventDto);
     }
+
+    @GetMapping("/event/{title}")
+    Event getEventByTitle(@PathVariable String title) {
+        return eventService.getEventByTitle(title);
+    }
+
+
 }
