@@ -6,7 +6,6 @@ import de.marie.eventboard.service.EventService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -36,19 +35,19 @@ public class EventController {
         return eventService.createEvent(eventDto);
     }
 
-    @GetMapping("/event/{id}")
-    EventDto getEventByTitle(@PathVariable Long id) {
-        return eventService.getEventById(id);
+    @GetMapping("/event/{guid}")
+    EventDto getEventByGuid(@PathVariable String guid) {
+        return eventService.getEventById(guid);
     }
 
-    @PutMapping("/event/{id}")
-    Event updateEvent(@RequestBody EventDto eventDto, @PathVariable Long id) {
-        return eventService.updateEvent(eventDto, id);
+    @PutMapping("/event/{guid}")
+    Event updateEvent(@RequestBody EventDto eventDto, @PathVariable String guid) {
+        return eventService.updateEvent(eventDto, guid);
     }
 
-    @DeleteMapping("/event/{id}")
-    String deleteUser(@PathVariable Long id) {
-        return eventService.deleteUserById(id);
+    @DeleteMapping("/event/{guid}")
+    String deleteUser(@PathVariable String guid) {
+        return eventService.deleteUserByGuid(guid);
     }
 
 

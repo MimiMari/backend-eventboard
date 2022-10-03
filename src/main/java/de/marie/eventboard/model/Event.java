@@ -24,6 +24,7 @@ public class Event {
     private String place;
     private String description;
     private LocalDateTime date;
+    private String guid;
 
 
     @Override

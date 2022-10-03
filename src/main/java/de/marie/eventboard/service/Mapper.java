@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Service
 @Data
@@ -19,6 +20,7 @@ public class Mapper {
         eventDto.setTitle(event.getTitle());
         eventDto.setDescription(event.getDescription());
         eventDto.setPlace(event.getPlace());
+        eventDto.setGuid(event.getGuid());
         eventDto.setDate(event.getDate().format(formatter));
 
         return eventDto;
@@ -26,6 +28,7 @@ public class Mapper {
 
     public Event convertDtoToEntity(EventDto eventDto) {
         Event event = new Event();
+        event.setGuid(String.valueOf(UUID.randomUUID()));
         event.setTitle(eventDto.getTitle());
         event.setDescription(eventDto.getDescription());
         event.setPlace(eventDto.getPlace());

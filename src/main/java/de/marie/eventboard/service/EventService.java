@@ -33,34 +33,36 @@ public class EventService {
     public Event createEvent(EventDto eventDto) {
 
         return eventRepository.save(mapper.convertDtoToEntity(eventDto));
-
     }
 
-    public EventDto getEventById(Long id) {
+    public EventDto getEventById(String guid) {
 
-        return eventRepository.findById(id)
+        return eventRepository.findOneByGuid(guid)
                 .map(event -> mapper.convertEntityToDto(event))
-                .orElseThrow(() -> new EventNotFoundException(id));
+                .orElseThrow(() -> new EventNotFoundException(guid));
     }
 
-    public Event updateEvent(EventDto eventDto, Long id) {
+    public Event updateEvent(EventDto eventDto, String guid) {
 
-        return eventRepository.findById(id)
+        return eventRepository.findOneByGuid(guid)
                 .map(event -> {
                     event.setDescription(eventDto.getDescription());
                     event.setTitle(eventDto.getTitle());
                     event.setDate(LocalDateTime.parse(eventDto.getDate()));
                     event.setPlace(eventDto.getPlace());
+                    event.setGuid(eventDto.getGuid());
                     return eventRepository.save(event);
-                }).orElseThrow(() -> new EventNotFoundException(id));
+                }).orElseThrow(() -> new EventNotFoundException(guid));
 
     }
 
-    public String deleteUserById(Long id) {
-        if (!eventRepository.existsById(id)) {
-            throw new EventNotFoundException(id);
+    public String deleteUserByGuid(String guid) {
+        if (eventRepository.findOneByGuid(guid).isPresent()) {
+        eventRepository.delete(eventRepository.findOneByGuid(guid).get());
+        return "Event with id " + guid + " has been deleted.";
+
+        } else {
+            throw new EventNotFoundException(guid);
         }
-        eventRepository.deleteById(id);
-        return "Event with id " + id + " has been deleted.";
     }
 }

@@ -15,6 +15,7 @@ public class EventDto {
     private String description;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", shape = JsonFormat.Shape.STRING)
     private String date;
+    private String guid;
 
     @Override
     public boolean equals(Object o) {
