@@ -46,5 +46,10 @@ public class EventController {
         return eventService.updateEvent(eventDto, id);
     }
 
+    @DeleteMapping("/event/{id}")
+    String deleteUser(@PathVariable Long id) {
+        return eventService.deleteUserById(id);
+    }
+
 
 }

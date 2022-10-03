@@ -55,4 +55,12 @@ public class EventService {
                 }).orElseThrow(() -> new EventNotFoundException(id));
 
     }
+
+    public String deleteUserById(Long id) {
+        if (!eventRepository.existsById(id)) {
+            throw new EventNotFoundException(id);
+        }
+        eventRepository.deleteById(id);
+        return "Event with id " + id + " has been deleted.";
+    }
 }
