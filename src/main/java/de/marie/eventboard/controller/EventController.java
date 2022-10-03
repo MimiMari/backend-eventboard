@@ -36,9 +36,14 @@ public class EventController {
         return eventService.createEvent(eventDto);
     }
 
-    @GetMapping("/event/{title}")
-    Event getEventByTitle(@PathVariable String title) {
-        return eventService.getEventByTitle(title);
+    @GetMapping("/event/{id}")
+    EventDto getEventByTitle(@PathVariable Long id) {
+        return eventService.getEventById(id);
+    }
+
+    @PutMapping("/event/{id}")
+    Event updateEvent(@RequestBody EventDto eventDto, @PathVariable Long id) {
+        return eventService.updateEvent(eventDto, id);
     }
 
 

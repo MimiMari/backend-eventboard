@@ -4,9 +4,9 @@ import de.marie.eventboard.dto.EventDto;
 import de.marie.eventboard.exception.EventNotFoundException;
 import de.marie.eventboard.model.Event;
 import de.marie.eventboard.repository.EventRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,21 +38,25 @@ public class EventService {
 
     }
 
-    public Event getEventByTitle(String title) {
+    public EventDto getEventById(Long id) {
 
-        Event event = eventRepository.findOneByTitle(title);
-        if (event == null) {
-            throw new EventNotFoundException(title);
-        }
-        return event;
+        return eventRepository.findById(id).
+                map(event -> mapper.convertEntityToDto(event))
+                .orElseThrow(() -> new EventNotFoundException(id));
 
-//        return eventRepository.findOneByTitle(title);
 
-        //        List<EventDto> allEvents = eventService.getAllEvents();
-//        if (allEvents.isEmpty()) {
-//            throw new NoEventsException();
-//        }
-//        return allEvents;
+
+    }
+
+    public Event updateEvent(EventDto eventDto, Long id) {
+
+        return eventRepository.findById(id).map(event -> {
+            event.setDescription(eventDto.getDescription());
+            event.setTitle(eventDto.getTitle());
+            event.setDate(LocalDateTime.parse(eventDto.getDate()));
+            event.setPlace(eventDto.getPlace());
+            return eventRepository.save(event);
+        }).orElseThrow(() -> new EventNotFoundException(id));
 
     }
 }
