@@ -13,6 +13,7 @@ public class EventDto {
     private String title;
     private String place;
     private String description;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", shape = JsonFormat.Shape.STRING)
     private String date;
 
     @Override
