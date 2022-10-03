@@ -59,7 +59,7 @@ public class EventService {
     public String deleteUserByGuid(String guid) {
         if (eventRepository.findOneByGuid(guid).isPresent()) {
         eventRepository.delete(eventRepository.findOneByGuid(guid).get());
-        return "Event with id " + guid + " has been deleted.";
+        return "Event with guid " + guid + " has been deleted.";
 
         } else {
             throw new EventNotFoundException(guid);
