@@ -28,8 +28,6 @@ public class EventService {
                 .stream()
                 .map(event -> mapper.convertEntityToDto(event))
                 .collect(Collectors.toList());
-
-
     }
 
     public Event createEvent(EventDto eventDto) {
@@ -40,23 +38,21 @@ public class EventService {
 
     public EventDto getEventById(Long id) {
 
-        return eventRepository.findById(id).
-                map(event -> mapper.convertEntityToDto(event))
+        return eventRepository.findById(id)
+                .map(event -> mapper.convertEntityToDto(event))
                 .orElseThrow(() -> new EventNotFoundException(id));
-
-
-
     }
 
     public Event updateEvent(EventDto eventDto, Long id) {
 
-        return eventRepository.findById(id).map(event -> {
-            event.setDescription(eventDto.getDescription());
-            event.setTitle(eventDto.getTitle());
-            event.setDate(LocalDateTime.parse(eventDto.getDate()));
-            event.setPlace(eventDto.getPlace());
-            return eventRepository.save(event);
-        }).orElseThrow(() -> new EventNotFoundException(id));
+        return eventRepository.findById(id)
+                .map(event -> {
+                    event.setDescription(eventDto.getDescription());
+                    event.setTitle(eventDto.getTitle());
+                    event.setDate(LocalDateTime.parse(eventDto.getDate()));
+                    event.setPlace(eventDto.getPlace());
+                    return eventRepository.save(event);
+                }).orElseThrow(() -> new EventNotFoundException(id));
 
     }
 }
